@@ -11,6 +11,7 @@ st.set_page_config(
     page_title='LinhSenpai',
     page_icon='🤘',
 )
+st.set_option('deprecation.showPyplotGlobalUse', False)
 # callback and function
 def calc_slider():
     st.session_state['slider'] = st.session_state['slide_input']
