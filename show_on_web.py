@@ -25,36 +25,6 @@ def convert(df):
         if (name_type[1] == 'object'):
             data[:, ind] = labelEncoder.fit_transform(data[:, ind])
     return data
-
-def getLossValues(algorithm, df, ratio):
-    data = convert(df)
-    X = data[:, :-1]
-    y = data[:, -1].astype('int')
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=ratio)
-    if algorithm == 'Decision Tree Classification':
-        clf = tree.DecisionTreeClassifier(random_state=0, max_depth=2)
-        clf.fit(X_train, y_train)
-    elif algorithm == 'Linear Classification':
-        clf = SGDClassifier(max_iter=1000, tol=1e-3)
-        clf.fit(X_train, y_train)
-    elif algorithm == 'Logistic Regression':
-        clf = LogisticRegression(C=1e5, solver = 'lbfgs', multi_class = 'multinomial')
-        clf.fit(X_train, y_train)
-    elif algorithm == 'Navie Bayes':
-        clf = MultinomialNB()
-        clf.fit(X_train, y_train)
-    else:
-        clf = RandomForestClassifier(n_estimators = 100, 
-                            criterion ='gini', 
-                            max_depth = 3, 
-                            min_samples_split = 2, 
-                            min_samples_leaf = 15,)
-        clf.fit(X_train, y_train)
-    F1Train = metrics.f1_score(clf.predict(X_train), y_train, average = 'macro')
-    F1Test = metrics.f1_score(clf.predict(X_test), y_test, average = 'macro')
-    accuracy_values = [F1Train, F1Test]
-    accuracy_values = np.array([round(accuracy_value*100, 2) for accuracy_value in accuracy_values ])
-    return accuracy_values
 # Title
 # Tên chương trình
 st.title(' :violet[Classification Algorithms]')
